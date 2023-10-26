@@ -12,6 +12,7 @@ import Navbar, { SideBar } from "./components/Navbar";
 import ShoppingCart from "./screens/ShoppingCart";
 import Login from "./screens/Login";
 import React from "react";
+import SignUp from "./screens/SignUp";
 
 export default function Routing() {
   const Stack = createNativeStackNavigator();
@@ -28,6 +29,7 @@ export default function Routing() {
           component={HomeScreen}
           options={{ title: "First Page" }}
         />
+
         <Stack.Screen
           name="Login"
           component={Login}
@@ -70,6 +72,11 @@ export default function Routing() {
           options={{ title: "Menu" }}
         />
       </Stack.Group>
+      <Stack.Screen
+        name="SignUp"
+        component={SignUp}
+        options={{ title: "Sign Up" }}
+      />
     </Stack.Navigator>
   );
 }

@@ -1,37 +1,25 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
 import {
-  StyleSheet,
-  Text,
   View,
-  Image,
   TextInput,
   TouchableOpacity,
+  StyleSheet,
+  Image,
+  Text,
 } from "react-native";
-import CustonButton from "../components/Button";
-import { useNavigation } from "@react-navigation/native";
-import { userLogin } from "../Api";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import SignUp from "./SignUp";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import HomeScreen from "./HomeScreen";
+import { userSighUp } from "../Api";
+import { useState } from "react";
 
-const Stack = createNativeStackNavigator();
-
-export default function App() {
+export default function SignUp() {
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
   const navigation: any = useNavigation();
 
-  async function Login() {
-    const logUser = await userLogin(user, password);
-    if (logUser.token) {
-      navigation("Routing");
-      AsyncStorage.setItem("token", logUser.token);
-      AsyncStorage.setItem("user", JSON.stringify(logUser.user));
-    } else {
-      alert("Login Failed");
-    }
+  async function userSignUpFunction() {
+    await userSighUp(user, password);
+    navigation("Login");
   }
 
   return (
@@ -41,7 +29,7 @@ export default function App() {
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
-          placeholder="User."
+          placeholder="Set Up Your Username"
           placeholderTextColor="#003f5c"
           onChangeText={(user) => setUser(user)}
         />
@@ -49,38 +37,23 @@ export default function App() {
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
-          placeholder="Password."
+          placeholder="Set Up Your Password."
           placeholderTextColor="#003f5c"
           secureTextEntry={true}
           onChangeText={(password) => setPassword(password)}
         />
       </View>
       <TouchableOpacity>
-        <Text style={styles.forgot_button} onPress={() => signUpNavigation()}>
-          Sign Up
-        </Text>
+        <Text style={styles.forgot_button}>Sign Up</Text>
       </TouchableOpacity>
       <TouchableOpacity>
-        <Text style={styles.button} onPress={() => Login()}>
-          Login
+        <Text style={styles.button} onPress={() => userSignUpFunction()}>
+          Sign Up
         </Text>
       </TouchableOpacity>
     </View>
   );
 }
-function signUpNavigation() {
-  const token = AsyncStorage.getItem("token");
-  return (
-    <Stack.Navigator>
-      {token !== null ? (
-        <Stack.Screen name="HomeScreen" component={HomeScreen} />
-      ) : (
-        <Stack.Screen name="SingUp" component={SignUp} />
-      )}
-    </Stack.Navigator>
-  );
-}
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

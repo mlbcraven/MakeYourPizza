@@ -19,3 +19,18 @@ export async function userLogin(
   const result = await fetch(`${url}/login`, options);
   return result.json();
 }
+
+export async function userSighUp(
+  name: string,
+  password: string
+): Promise<loginResponce> {
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ name, password }),
+  };
+  const result = await fetch(`${url}/signup`, options);
+  return result.json();
+}
