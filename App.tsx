@@ -14,27 +14,23 @@ import Offers from "./screens/Offers";
 import Login from "./screens/Login";
 import Button from "./components/Button";
 import React, { useState } from "react";
+import SignUp from "./screens/SignUp";
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [userLoggedIn, setUserLoggedIn] = useState(false);
   return (
     <NavigationContainer>
-      {userLoggedIn ? (
-        <Drawer.Navigator>
-          <Drawer.Screen
-            name="Routing"
-            component={Routing}
-            options={{ headerShown: false }}
-          />
-        </Drawer.Navigator>
-      ) : (
-        <Stack.Navigator initialRouteName="Login">
-          <Stack.Screen name="Login" component={Login}></Stack.Screen>
-        </Stack.Navigator>
-      )}
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen name="Login" component={Login}></Stack.Screen>
+        <Stack.Screen name="SignUp" component={SignUp}></Stack.Screen>
+        <Stack.Screen
+          name="App"
+          component={Routing}
+          options={{ headerShown: false }}
+        ></Stack.Screen>
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }

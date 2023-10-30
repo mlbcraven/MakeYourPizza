@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import CustonButton from "../components/Button";
-import { useNavigation } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { userLogin } from "../Api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import SignUp from "./SignUp";
@@ -19,16 +19,18 @@ import HomeScreen from "./HomeScreen";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [user, setUser] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation: any = useNavigation();
 
   async function Login() {
-    const logUser = await userLogin(user, password);
+    const logUser = await userLogin(email, password);
+
+    console.log(logUser);
     if (logUser.token) {
-      navigation("Routing");
-      AsyncStorage.setItem("token", logUser.token);
-      AsyncStorage.setItem("user", JSON.stringify(logUser.user));
+      await AsyncStorage.setItem("token", logUser.token);
+      await AsyncStorage.setItem("user", JSON.stringify(logUser.user));
+      navigation.navigate("App");
     } else {
       alert("Login Failed");
     }
@@ -41,9 +43,9 @@ export default function App() {
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
-          placeholder="User."
+          placeholder="Email."
           placeholderTextColor="#003f5c"
-          onChangeText={(user) => setUser(user)}
+          onChangeText={(email) => setEmail(email)}
         />
       </View>
       <View style={styles.inputView}>
@@ -56,28 +58,19 @@ export default function App() {
         />
       </View>
       <TouchableOpacity>
-        <Text style={styles.forgot_button} onPress={() => signUpNavigation()}>
+        <Text
+          style={styles.forgot_button}
+          onPress={() => navigation.navigate("SignUp")}
+        >
           Sign Up
         </Text>
       </TouchableOpacity>
       <TouchableOpacity>
-        <Text style={styles.button} onPress={() => Login()}>
+        <Text style={styles.button} onPress={async () => await Login()}>
           Login
         </Text>
       </TouchableOpacity>
     </View>
-  );
-}
-function signUpNavigation() {
-  const token = AsyncStorage.getItem("token");
-  return (
-    <Stack.Navigator>
-      {token !== null ? (
-        <Stack.Screen name="HomeScreen" component={HomeScreen} />
-      ) : (
-        <Stack.Screen name="SingUp" component={SignUp} />
-      )}
-    </Stack.Navigator>
   );
 }
 

@@ -1,4 +1,6 @@
-const url = "https://dominosbackend-production.up.railway.app/users";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const url = "https://dominosbackend-production.up.railway.app";
 
 interface loginResponce {
   token: string;
@@ -6,7 +8,7 @@ interface loginResponce {
 }
 
 export async function userLogin(
-  name: string,
+  email: string,
   password: string
 ): Promise<loginResponce> {
   const options = {
@@ -14,23 +16,24 @@ export async function userLogin(
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ name, password }),
+    body: JSON.stringify({ email, password }),
   };
-  const result = await fetch(`${url}/login`, options);
+  const result = await fetch(`${url}/users/login`, options);
   return result.json();
 }
 
 export async function userSighUp(
   name: string,
-  password: string
-): Promise<loginResponce> {
+  password: string,
+  email: string
+) {
   const options = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ name, password }),
+    body: JSON.stringify({ name, password, email }),
   };
-  const result = await fetch(`${url}/signup`, options);
+  const result = await fetch(`${url}/users/signup`, options);
   return result.json();
 }

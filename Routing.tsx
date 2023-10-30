@@ -24,6 +24,7 @@ export default function Routing() {
           component={SideBar}
           options={{ headerShown: false }}
         />
+
         <Stack.Screen
           name="HomeScreen"
           component={HomeScreen}

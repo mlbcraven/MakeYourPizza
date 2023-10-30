@@ -15,11 +15,12 @@ import { useState } from "react";
 export default function SignUp() {
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   const navigation: any = useNavigation();
 
   async function userSignUpFunction() {
-    await userSighUp(user, password);
-    navigation("Login");
+    await userSighUp(user, password, email);
+    navigation.navigate("Login");
   }
 
   return (
@@ -37,15 +38,22 @@ export default function SignUp() {
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
+          placeholder="Set Up Your Email."
+          placeholderTextColor="#003f5c"
+          secureTextEntry={true}
+          onChangeText={(email) => setEmail(email)}
+        />
+      </View>
+      <View style={styles.inputView}>
+        <TextInput
+          style={styles.TextInput}
           placeholder="Set Up Your Password."
           placeholderTextColor="#003f5c"
           secureTextEntry={true}
           onChangeText={(password) => setPassword(password)}
         />
       </View>
-      <TouchableOpacity>
-        <Text style={styles.forgot_button}>Sign Up</Text>
-      </TouchableOpacity>
+
       <TouchableOpacity>
         <Text style={styles.button} onPress={() => userSignUpFunction()}>
           Sign Up
@@ -73,9 +81,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   TextInput: {
-    height: 50,
+    height: 20,
     flex: 1,
-    padding: 10,
+    padding: 5,
     marginLeft: 20,
   },
   button: {
