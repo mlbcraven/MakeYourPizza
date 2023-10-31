@@ -5,7 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import HomeScreen from "./screens/HomeScreen";
 import Toppings from "./screens/Toppings";
 import News from "./screens/News";
-import Navbar, { SideBar } from "./components/Navbar";
+import Navbar from "./components/Navbar";
 import NavigationBar from "react-native-navbar";
 import Routing from "./Routing";
 import { createDrawerNavigator } from "@react-navigation/drawer";

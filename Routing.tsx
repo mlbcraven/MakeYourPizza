@@ -8,11 +8,12 @@ import Help from "./screens/Help";
 import Information from "./screens/Information";
 import Offers from "./screens/Offers";
 import Menu from "./screens/Menu";
-import Navbar, { SideBar } from "./components/Navbar";
+import Navbar from "./components/Navbar";
 import ShoppingCart from "./screens/ShoppingCart";
 import Login from "./screens/Login";
 import React from "react";
 import SignUp from "./screens/SignUp";
+import SideBar from "./components/SideBar";
 
 export default function Routing() {
   const Stack = createNativeStackNavigator();

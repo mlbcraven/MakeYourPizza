@@ -13,33 +13,20 @@ import {
   Image,
   Button,
 } from "react-native";
-import Menu from "../screens/Menu";
-import News from "../screens/News";
-import Toppings from "../screens/Toppings";
-import Offers from "../screens/Offers";
-import AboutUs from "../screens/AboutUs";
-import Information from "../screens/Information";
+import SideBar from "./SideBar";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-const Drawer = createDrawerNavigator();
-
-export function SideBar() {
-  return (
-    <Drawer.Navigator>
-      <Drawer.Screen name="Menu" component={Menu} />
-      <Drawer.Screen name="News" component={News} />
-      <Drawer.Screen name="Toppings" component={Toppings} />
-      <Drawer.Screen name="Offers" component={Offers} />
-      <Drawer.Screen name="Informations" component={Information} />
-      <Drawer.Screen name="About Us" component={AboutUs} />
-    </Drawer.Navigator>
-  );
-}
-
-export default function Navbar() {
+function Bar() {
   const navigation: any = useNavigation();
+
   return (
     <View style={styles.navBar}>
-      {<SideBar />}
+      <TouchableOpacity onPress={() => navigation.openDrawer()}>
+        <Image
+          style={styles.image}
+          source={require("../assets/icons8-menu-50.png")}
+        />
+      </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("HomeScreen")}>
         <Text>Make Your Pizza</Text>
       </TouchableOpacity>
@@ -49,6 +36,16 @@ export default function Navbar() {
           source={require("../assets/icons8-cart-80.png")}
         />
       </TouchableOpacity>
+    </View>
+  );
+}
+
+export default function Navbar() {
+  const Drawer = createDrawerNavigator();
+  const Stack = createNativeStackNavigator();
+  return (
+    <View>
+      <Bar />
     </View>
   );
 }
