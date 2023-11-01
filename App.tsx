@@ -15,22 +15,25 @@ import Login from "./screens/Login";
 import Button from "./components/Button";
 import React, { useState } from "react";
 import SignUp from "./screens/SignUp";
+import { NativeBaseProvider } from "native-base";
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen name="Login" component={Login}></Stack.Screen>
-        <Stack.Screen name="SignUp" component={SignUp}></Stack.Screen>
-        <Stack.Screen
-          name="App"
-          component={Routing}
-          options={{ headerShown: false }}
-        ></Stack.Screen>
-      </Stack.Navigator>
-    </NavigationContainer>
+    <NativeBaseProvider>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Login">
+          <Stack.Screen name="Login" component={Login}></Stack.Screen>
+          <Stack.Screen name="SignUp" component={SignUp}></Stack.Screen>
+          <Stack.Screen
+            name="App"
+            component={Routing}
+            options={{ headerShown: false }}
+          ></Stack.Screen>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </NativeBaseProvider>
   );
 }

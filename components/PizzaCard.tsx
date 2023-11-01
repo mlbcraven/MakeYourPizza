@@ -1,25 +1,24 @@
 import { View, Text, StyleSheet, Image } from "react-native";
+import { pizza } from "../Api";
+import { Box } from "native-base";
 
 interface PizzaCardProps {
   title: string;
-  img: string;
-  information: string;
-  isVegan: boolean;
-  isNew: boolean;
-  isSpicy: boolean;
-  isPremium: boolean;
+  pizza: pizza;
 }
 
 export default function PizzaCard(props: PizzaCardProps) {
   return (
     <View>
       <Text style={styles.title}>{props.title}</Text>
-      <Image
-        style={styles.image}
-        source={require(`../assets/pizzas/${props.img}`)}
-      />
-      <Text>{props.information}</Text>
-      {props.isSpicy}
+
+      <Text>{props.pizza.name}</Text>
+      <Text>{props.pizza.size}</Text>
+      <Box>
+        {props.pizza.toppings.map((t) => (
+          <Text>{t.name}</Text>
+        ))}
+      </Box>
     </View>
   );
 }

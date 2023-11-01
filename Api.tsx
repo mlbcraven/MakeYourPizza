@@ -7,11 +7,15 @@ interface loginResponce {
   user: string;
 }
 
-export interface pizzaOrders {
-  id: string;
-  userId: string;
-  pizzas: [];
+export interface toppingProps {
+  name: string;
   price: number;
+}
+
+export interface pizza {
+  name: string;
+  size: "Small" | "Medium" | "Large";
+  toppings: toppingProps[];
 }
 
 export async function userLogin(
@@ -45,26 +49,28 @@ export async function userSighUp(
   return result.json();
 }
 
-export async function getOrders(): Promise<pizzaOrders[]> {
-  const token = AsyncStorage.getItem("token");
+export async function getOrders(): Promise<pizza[]> {
+  const token = await AsyncStorage.getItem("token");
   const options = {
     method: "GET",
     headers: {
       Authorization: "Bearer " + token,
+      "Content-Type": "application/json",
     },
   };
   const result = await fetch(`${url}/orders`, options);
   return result.json();
 }
 
-export async function giveOrders(orderID: number): Promise<pizzaOrders[]> {
-  const token = AsyncStorage.getItem("token");
+export async function purchase(pizzas: pizza[]): Promise<pizza[]> {
+  const token = await AsyncStorage.getItem("token");
   const options = {
     method: "POST",
     headers: {
       Authorization: "Bearer " + token,
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify({ orderID }),
+    body: JSON.stringify({ pizzas }),
   };
   const result = await fetch(`${url}/orders`, options);
   return result.json();
